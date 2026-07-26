@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>پنل مدیریت سایت</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<style>
+:root{--ink:#22303E;--ink-soft:#5C6B7A;--soft:#F7F8FA;--border:#E4E7EB;--navy:#1F3A5F;--navy-deep:#16283F;--gold:#B08D42;--gold-soft:#F6F0E3;--green:#1B7F4B;--red:#B3261E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;color:var(--ink);background:var(--soft);font-size:15px;line-height:1.9}
+.container{max-width:860px;margin:0 auto;padding:24px 18px 80px}
+h1{font-size:21px;color:var(--navy-deep);margin-bottom:4px}
+.sub{color:var(--ink-soft);font-size:13.5px;margin-bottom:22px}
+.card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:18px}
+.card h2{font-size:16.5px;color:var(--navy-deep);margin-bottom:12px}
+label{display:block;font-size:13px;font-weight:600;color:var(--navy-deep);margin:10px 0 5px}
+input,textarea,select{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-family:inherit;font-size:14px;background:#fff;color:var(--ink)}
+textarea{min-height:84px;resize:vertical}
+.btn{display:inline-flex;align-items:center;gap:7px;border:none;border-radius:8px;padding:10px 18px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--navy);color:#fff}
+.btn-primary:hover{background:var(--navy-deep)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-ghost{background:#fff;border:1px solid var(--border);color:var(--navy)}
+.btn-danger{background:#fff;border:1px solid #F0C7C4;color:var(--red);font-size:12.5px;padding:6px 12px}
+.btn:disabled{opacity:.55;cursor:wait}
+.msg{font-size:13px;margin-top:10px;display:none;padding:9px 12px;border-radius:8px}
+.msg.ok{background:#E8F5EE;color:var(--green);display:block}
+.msg.err{background:#FBEAE9;color:var(--red);display:block}
+.tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.tab{border:1px solid var(--border);background:#fff;border-radius:999px;padding:8px 16px;font-family:inherit;font-size:13.5px;font-weight:700;color:var(--ink-soft);cursor:pointer}
+.tab.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.section{display:none}
+.section.active{display:block}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:8px;background:#fff;flex-wrap:wrap}
+.row .t{font-size:14px;font-weight:600}
+.row .d{font-size:12.5px;color:var(--ink-soft)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:620px){.grid2{grid-template-columns:1fr}}
+.item-box{border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px;background:var(--soft)}
+.item-box .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.item-box .head b{font-size:13.5px;color:var(--navy-deep)}
+.savebar{position:sticky;bottom:0;background:linear-gradient(0deg,var(--soft) 70%,transparent);padding:14px 0 6px;margin-top:6px}
+.hint{background:var(--gold-soft);border:1px solid #E9DDBE;border-radius:10px;padding:12px 16px;font-size:13px;color:#7A5F26;margin-bottom:16px}
+.linkcards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:620px){.linkcards{grid-template-columns:1fr}}
+.linkcard{display:block;border:1px solid var(--border);border-radius:12px;background:#fff;padding:18px;text-decoration:none;color:inherit}
+.linkcard:hover{border-color:var(--navy)}
+.linkcard b{display:block;color:var(--navy-deep);margin-bottom:4px;font-size:15px}
+.linkcard span{font-size:13px;color:var(--ink-soft)}
+#loginBox{max-width:430px;margin:60px auto 0}
+.logout{background:none;border:none;color:var(--red);font-family:inherit;font-size:13px;cursor:pointer;font-weight:700}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div id="loginBox" class="card">
+    <h1>🔐 ورود به پنل مدیریت</h1>
+    <div class="sub">کلید دسترسی (رمز مدیریت) خود را وارد کنید.</div>
+    <label>کلید دسترسی</label>
+    <input type="password" id="tokenInput" placeholder="github_pat_..." style="direction:ltr;text-align:left">
+    <label style="display:flex;align-items:center;gap:8px;font-weight:500;margin-top:12px"><input type="checkbox" id="remember" checked style="width:auto"> مرا در این مرورگر به خاطر بسپار</label>
+    <div style="margin-top:14px"><button class="btn btn-primary" onclick="login()">ورود</button></div>
+    <div class="msg" id="loginMsg"></div>
+  </div>
+
+  <div id="panel" style="display:none">
+    <div class="topbar">
+      <div>
+        <h1>⚙️ پنل مدیریت سایت</h1>
+        <div class="sub">تغییرات پس از ذخیره، معمولاً ظرف ۱ تا ۳ دقیقه روی سایت اعمال می‌شود.</div>
+      </div>
+      <button class="logout" onclick="logout()">خروج از پنل</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-s="slots" onclick="showTab(this)">📅 وقت‌های مشاوره</button>
+      <button class="tab" data-s="content" onclick="showTab(this)">📝 متن‌های سایت</button>
+      <button class="tab" data-s="posts" onclick="showTab(this)">📚 یادداشت‌های حقوقی</button>
+      <button class="tab" data-s="links" onclick="showTab(this)">📨 درخواست‌ها و چت</button>
+    </div>
+
+    <div class="section active" id="sec-slots">
+      <div class="hint">وقت‌های آزاد مشاوره را اینجا مدیریت کنید. پس از رزرو شدن یک وقت توسط کاربر (دریافت ایمیل)، آن وقت را از این فهرست حذف کنید تا دوباره رزرو نشود.</div>
+      <div class="card">
+        <h2>وقت‌های فعلی</h2>
+        <div id="slotList"></div>
+        <h2 style="margin-top:18px">افزودن وقت جدید</h2>
+        <div class="grid2">
+          <div><label>تاریخ (شمسی)</label><input id="newSlotDate" placeholder="مثال: شنبه ۱۰ مرداد ۱۴۰۵"></div>
+          <div><label>ساعت</label><input id="newSlotTime" placeholder="مثال: ۱۷:۰۰"></div>
+        </div>
+        <div style="margin-top:12px"><button class="btn btn-ghost" onclick="addSlot()">➕ افزودن به فهرست</button></div>
+        <div class="savebar"><button class="btn btn-primary" id="saveSlots" onclick="saveFile('slots')">💾 ذخیره و انتشار وقت‌ها</button><div class="msg" id="slotsMsg"></div></div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-content">
+      <div class="hint">متن‌های اصلی صفحه اول سایت (نسخه فارسی) را اینجا ویرایش کنید و در پایان دکمه ذخیره را بزنید.</div>
+      <div class="card">
+        <h2>بخش اصلی (بالای صفحه)</h2>
+        <label>عنوان کوچک بالای نام</label><input id="c-kicker">
+        <label>تیتر اصلی</label><input id="c-title">
+        <label>متن معرفی زیر تیتر</label><textarea id="c-sub"></textarea>
+      </div>
+      <div class="card">
+        <h2>درباره من</h2>
+        <label>پاراگراف اول</label><textarea id="c-p1"></textarea>
+        <label>پاراگراف دوم</label><textarea id="c-p2"></textarea>
+      </div>
+      <div class="card">
+        <h2>💼 سوابق حرفه‌ای</h2>
+        <div id="expList"></div>
+        <button class="btn btn-ghost" onclick="addItem('exp')">➕ افزودن سابقه</button>
+      </div>
+      <div class="card">
+        <h2>🎓 تحصیلات</h2>
+        <div id="eduList"></div>
+        <button class="btn btn-ghost" onclick="addItem('edu')">➕ افزودن مقطع</button>
+      </div>
+      <div class="card">
+        <h2>اطلاعات تماس</h2>
+        <div class="grid2">
+          <div><label>شماره موبایل (نمایش)</label><input id="c-phone" style="direction:ltr"></div>
+          <div><label>شماره برای تماس (با +98)</label><input id="c-phoneLink" style="direction:ltr"></div>
+        </div>
+        <label>ایمیل</label><input id="c-email" style="direction:ltr">
+      </div>
+      <div class="savebar"><button class="btn btn-primary" onclick="saveFile('content')">💾 ذخیره و انتشار متن‌ها</button><div class="msg" id="contentMsg"></div></div>
+    </div>
+
+    <div class="section" id="sec-posts">
+      <div class="hint">یادداشت‌های حقوقی سایت را اینجا مدیریت کنید. برای پاراگراف جدید، یک خط خالی بین متن‌ها بگذارید.</div>
+      <div class="card">
+        <h2>یادداشت‌ها</h2>
+        <div id="postList"></div>
+        <button class="btn btn-gold" onclick="newPost()">➕ یادداشت جدید</button>
+        <div id="postForm" style="display:none;margin-top:16px;border-top:1px solid var(--border);padding-top:6px">
+          <label>عنوان</label><input id="p-title">
+          <label>تاریخ (شمسی)</label><input id="p-date">
+          <label>متن یادداشت</label><textarea id="p-body" style="min-height:180px"></textarea>
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <button class="btn btn-ghost" onclick="savePostLocal()">ثبت در فهرست</button>
+            <button class="btn btn-ghost" onclick="cancelPost()">انصراف</button>
+          </div>
+        </div>
+        <div class="savebar"><button class="btn btn-primary" onclick="saveFile('posts')">💾 ذخیره و انتشار یادداشت‌ها</button><div class="msg" id="postsMsg"></div></div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-links">
+      <div class="hint">درخواست‌های مشاوره به ایمیل شما ارسال می‌شود و گفتگوهای آنلاین در پنل گفتینو انجام می‌شود.</div>
+      <div class="linkcards">
+        <a class="linkcard" href="https://mail.google.com" target="_blank" rel="noopener"><b>📨 درخواست‌های مشاوره</b><span>درخواست‌های جدید با موضوع «درخواست مشاوره جدید از سایت» به Gmail شما می‌آید.</span></a>
+        <a class="linkcard" href="https://panel.goftino.com" target="_blank" rel="noopener"><b>💬 پنل چت گفتینو</b><span>پاسخ به گفتگوهای آنلاین کاربران سایت (اپلیکیشن موبایل هم دارد).</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var REPO="mahdikateb/mahdikateb.github.io";
+var API="https://api.github.com/repos/"+REPO+"/contents/";
+var FILES={slots:"slots.json",content:"content.json",posts:"posts.json"};
+var token=null;
+var F={slots:null,content:null,posts:null};
+var editingPostId=null;
+
+function b64encode(str){var bytes=new TextEncoder().encode(str);var bin="";bytes.forEach(function(b){bin+=String.fromCharCode(b)});return btoa(bin)}
+function b64decode(b64){var bin=atob(b64.replace(/\n/g,""));var bytes=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++){bytes[i]=bin.charCodeAt(i)}return new TextDecoder().decode(bytes)}
+
+function ghHeaders(){return{"Authorization":"Bearer "+token,"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"}}
+function ghGet(key){
+  return fetch(API+FILES[key]+"?t="+Date.now(),{headers:ghHeaders()}).then(function(r){
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    return r.json();
+  }).then(function(j){F[key]={sha:j.sha,data:JSON.parse(b64decode(j.content))}});
+}
+function ghPut(key,msg){
+  var body={message:msg,content:b64encode(JSON.stringify(F[key].data,null,2)),sha:F[key].sha};
+  return fetch(API+FILES[key],{method:"PUT",headers:ghHeaders(),body:JSON.stringify(body)}).then(function(r){
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    return r.json();
+  }).then(function(j){F[key].sha=j.content.sha});
+}
+
+function showMsg(id,ok,text){var el=document.getElementById(id);el.className="msg "+(ok?"ok":"err");el.textContent=text}
+
+function login(){
+  var t=document.getElementById("tokenInput").value.trim();
+  if(!t){showMsg("loginMsg",false,"کلید دسترسی را وارد کنید.");return}
+  token=t;
+  showMsg("loginMsg",true,"در حال بررسی...");
+  Promise.all([ghGet("slots"),ghGet("content"),ghGet("posts")]).then(function(){
+    if(document.getElementById("remember").checked){localStorage.setItem("siteAdminToken",t)}
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("panel").style.display="block";
+    renderSlots();renderContent();renderPosts();
+  }).catch(function(e){token=null;showMsg("loginMsg",false,"ورود ناموفق بود. کلید دسترسی را بررسی کنید. ("+e.message+")")});
+}
+function logout(){localStorage.removeItem("siteAdminToken");location.reload()}
+
+function showTab(btn){
+  document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("active")});
+  document.querySelectorAll(".section").forEach(function(s){s.classList.remove("active")});
+  btn.classList.add("active");
+  document.getElementById("sec-"+btn.getAttribute("data-s")).classList.add("active");
+}
+
+/* ---- وقت‌ها ---- */
+function renderSlots(){
+  var list=document.getElementById("slotList");list.innerHTML="";
+  var slots=F.slots.data.slots||[];
+  if(!slots.length){list.innerHTML='<div class="d" style="padding:8px 2px">هیچ وقتی ثبت نشده است.</div>';return}
+  slots.forEach(function(s,i){
+    var row=document.createElement("div");row.className="row";
+    var t=document.createElement("div");t.className="t";t.textContent=s.label;row.appendChild(t);
+    var del=document.createElement("button");del.className="btn btn-danger";del.textContent="حذف";
+    del.onclick=function(){F.slots.data.slots.splice(i,1);renderSlots()};
+    row.appendChild(del);list.appendChild(row);
+  });
+}
+function addSlot(){
+  var d=document.getElementById("newSlotDate").value.trim();
+  var t=document.getElementById("newSlotTime").value.trim();
+  if(!d||!t){showMsg("slotsMsg",false,"تاریخ و ساعت را وارد کنید.");return}
+  F.slots.data.slots.push({id:"s"+Date.now(),label:d+" — ساعت "+t});
+  document.getElementById("newSlotDate").value="";document.getElementById("newSlotTime").value="";
+  showMsg("slotsMsg",true,"به فهرست اضافه شد. برای انتشار، دکمه ذخیره را بزنید.");
+  renderSlots();
+}
+
+/* ---- متن‌ها ---- */
+function renderContent(){
+  var c=F.content.data;
+  document.getElementById("c-kicker").value=(c.hero&&c.hero.kicker)||"";
+  document.getElementById("c-title").value=(c.hero&&c.hero.title)||"";
+  document.getElementById("c-sub").value=(c.hero&&c.hero.sub)||"";
+  document.getElementById("c-p1").value=(c.about&&c.about.p1)||"";
+  document.getElementById("c-p2").value=(c.about&&c.about.p2)||"";
+  document.getElementById("c-phone").value=(c.contact&&c.contact.phone)||"";
+  document.getElementById("c-phoneLink").value=(c.contact&&c.contact.phoneLink)||"";
+  document.getElementById("c-email").value=(c.contact&&c.contact.email)||"";
+  renderItems("exp",c.experience||[]);
+  renderItems("edu",c.education||[]);
+}
+function renderItems(kind,items){
+  var list=document.getElementById(kind+"List");list.innerHTML="";
+  items.forEach(function(it,i){
+    var box=document.createElement("div");box.className="item-box";
+    var head=document.createElement("div");head.className="head";
+    var b=document.createElement("b");b.textContent=(kind==="exp"?"سابقه ":"مقطع ")+(i+1);head.appendChild(b);
+    var del=document.createElement("button");del.className="btn btn-danger";del.textContent="حذف";
+    del.onclick=function(){items.splice(i,1);renderItems(kind,items)};
+    head.appendChild(del);box.appendChild(head);
+    function field(lbl,key,isArea){
+      var l=document.createElement("label");l.textContent=lbl;box.appendChild(l);
+      var inp=document.createElement(isArea?"textarea":"input");inp.value=it[key]||"";
+      inp.oninput=function(){it[key]=inp.value};
+      if(isArea)inp.style.minHeight="64px";
+      box.appendChild(inp);
+    }
+    field("بازه زمانی","when",false);
+    field("عنوان","title",false);
+    field("محل / موسسه","where",false);
+    if(kind==="exp")field("توضیح","desc",true);
+    list.appendChild(box);
+  });
+}
+function addItem(kind){
+  var c=F.content.data;
+  if(kind==="exp"){c.experience=c.experience||[];c.experience.push({when:"",title:"",where:"",desc:""});renderItems("exp",c.experience)}
+  else{c.education=c.education||[];c.education.push({when:"",title:"",where:""});renderItems("edu",c.education)}
+}
+function collectContent(){
+  var c=F.content.data;
+  c.hero=c.hero||{};c.about=c.about||{};c.contact=c.contact||{};
+  c.hero.kicker=document.getElementById("c-kicker").value;
+  c.hero.title=document.getElementById("c-title").value;
+  c.hero.sub=document.getElementById("c-sub").value;
+  c.about.p1=document.getElementById("c-p1").value;
+  c.about.p2=document.getElementById("c-p2").value;
+  c.contact.phone=document.getElementById("c-phone").value;
+  c.contact.phoneLink=document.getElementById("c-phoneLink").value;
+  c.contact.email=document.getElementById("c-email").value;
+}
+
+/* ---- یادداشت‌ها ---- */
+function renderPosts(){
+  var list=document.getElementById("postList");list.innerHTML="";
+  var posts=F.posts.data.posts||[];
+  if(!posts.length){list.innerHTML='<div class="d" style="padding:8px 2px">هنوز یادداشتی ثبت نشده است.</div>'}
+  posts.slice().reverse().forEach(function(p){
+    var row=document.createElement("div");row.className="row";
+    var info=document.createElement("div");
+    var t=document.createElement("div");t.className="t";t.textContent=p.title;info.appendChild(t);
+    var d=document.createElement("div");d.className="d";d.textContent=p.date||"";info.appendChild(d);
+    row.appendChild(info);
+    var btns=document.createElement("div");btns.style.display="flex";btns.style.gap="6px";
+    var ed=document.createElement("button");ed.className="btn btn-ghost";ed.style.padding="6px 12px";ed.style.fontSize="12.5px";ed.textContent="ویرایش";
+    ed.onclick=function(){editPost(p.id)};btns.appendChild(ed);
+    var del=document.createElement("button");del.className="btn btn-danger";del.textContent="حذف";
+    del.onclick=function(){
+      if(!confirm("این یادداشت حذف شود؟"))return;
+      F.posts.data.posts=F.posts.data.posts.filter(function(x){return x.id!==p.id});renderPosts();
+    };btns.appendChild(del);
+    row.appendChild(btns);list.appendChild(row);
+  });
+}
+function todayJalali(){
+  try{return new Intl.DateTimeFormat("fa-IR",{day:"numeric",month:"long",year:"numeric"}).format(new Date())}catch(e){return""}
+}
+function newPost(){
+  editingPostId=null;
+  document.getElementById("p-title").value="";
+  document.getElementById("p-date").value=todayJalali();
+  document.getElementById("p-body").value="";
+  document.getElementById("postForm").style.display="block";
+}
+function editPost(id){
+  var p=(F.posts.data.posts||[]).find(function(x){return x.id===id});
+  if(!p)return;
+  editingPostId=id;
+  document.getElementById("p-title").value=p.title||"";
+  document.getElementById("p-date").value=p.date||"";
+  document.getElementById("p-body").value=p.body||"";
+  document.getElementById("postForm").style.display="block";
+  document.getElementById("postForm").scrollIntoView({behavior:"smooth"});
+}
+function cancelPost(){document.getElementById("postForm").style.display="none";editingPostId=null}
+function savePostLocal(){
+  var title=document.getElementById("p-title").value.trim();
+  var date=document.getElementById("p-date").value.trim();
+  var body=document.getElementById("p-body").value.trim();
+  if(!title||!body){showMsg("postsMsg",false,"عنوان و متن یادداشت را وارد کنید.");return}
+  F.posts.data.posts=F.posts.data.posts||[];
+  if(editingPostId){
+    var p=F.posts.data.posts.find(function(x){return x.id===editingPostId});
+    if(p){p.title=title;p.date=date;p.body=body}
+  }else{
+    F.posts.data.posts.push({id:"p"+Date.now(),title:title,date:date,body:body});
+  }
+  cancelPost();renderPosts();
+  showMsg("postsMsg",true,"در فهرست ثبت شد. برای انتشار در سایت، دکمه ذخیره را بزنید.");
+}
+
+/* ---- ذخیره ---- */
+function saveFile(key){
+  if(key==="content")collectContent();
+  var msgId=key+"Msg";
+  showMsg(msgId,true,"در حال ذخیره...");
+  ghPut(key,"Update "+FILES[key]+" via admin panel").then(function(){
+    showMsg(msgId,true,"✅ ذخیره شد. تغییرات تا چند دقیقه دیگر روی سایت اعمال می‌شود.");
+  }).catch(function(e){
+    showMsg(msgId,false,"خطا در ذخیره: "+e.message+" — صفحه را بازنشانی کنید و دوباره وارد شوید.");
+  });
+}
+
+/* ورود خودکار */
+(function(){
+  var saved=localStorage.getItem("siteAdminToken");
+  if(saved){document.getElementById("tokenInput").value=saved;login()}
+})();
+</script>
+</body>
+</html>

@@ -30,10 +30,13 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdro
 .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
 .brand{font-weight:700;font-size:17px;color:var(--navy)}
 .brand span{color:var(--gold)}
-.nav-links{display:flex;gap:28px;font-size:15px;color:var(--ink-soft)}
+.nav-links{display:flex;gap:24px;font-size:15px;color:var(--ink-soft)}
 .nav-links a:hover{color:var(--navy)}
-.nav-cta{background:var(--navy);color:#fff;padding:9px 18px;border-radius:8px;font-size:14px;font-weight:600}
+.nav-side{display:flex;align-items:center;gap:10px}
+.nav-cta{background:var(--navy);color:#fff;padding:9px 18px;border-radius:8px;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:inherit}
 .nav-cta:hover{background:var(--navy-deep)}
+.lang-switch{border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;font-weight:700;color:var(--navy)}
+.lang-switch:hover{border-color:var(--navy)}
 @media(max-width:760px){.nav-links{display:none}}
 
 /* ===== Hero ===== */
@@ -43,7 +46,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdro
 .hero h1{font-size:40px;line-height:1.4;color:var(--navy-deep);font-weight:800;margin-bottom:14px}
 .hero .sub{font-size:18px;color:var(--ink-soft);max-width:34em;margin-bottom:28px}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:8px;font-weight:600;font-size:15px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:8px;font-weight:600;font-size:15px;border:none;cursor:pointer;font-family:inherit}
 .btn-primary{background:var(--navy);color:#fff}
 .btn-primary:hover{background:var(--navy-deep)}
 .btn-ghost{border:1px solid var(--border);color:var(--navy);background:#fff}
@@ -120,6 +123,33 @@ section{padding:72px 0}
 /* Footer */
 footer{border-top:1px solid var(--border);padding:28px 0;color:var(--ink-soft);font-size:14px}
 .footer-inner{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ===== Booking ===== */
+.book-fab{position:fixed;bottom:22px;right:22px;z-index:80;display:inline-flex;align-items:center;gap:9px;background:var(--gold);color:#fff;border:none;cursor:pointer;padding:14px 22px;border-radius:999px;font-family:inherit;font-size:15px;font-weight:700;box-shadow:0 10px 28px rgba(176,141,66,.45)}
+.book-fab:hover{background:#9A7A35}
+.bk-overlay{position:fixed;inset:0;background:rgba(22,40,63,.55);z-index:90;display:none;align-items:center;justify-content:center;padding:18px}
+.bk-overlay.open{display:flex}
+.bk-modal{background:#fff;border-radius:16px;max-width:460px;width:100%;max-height:92vh;overflow:auto;padding:28px 26px;position:relative}
+.bk-close{position:absolute;top:14px;left:14px;background:var(--soft);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;color:var(--ink-soft)}
+.bk-modal h3{color:var(--navy-deep);font-size:19px;margin-bottom:4px}
+.bk-sub{color:var(--ink-soft);font-size:13.5px;margin-bottom:18px}
+.bk-field{margin-bottom:14px}
+.bk-field label{display:block;font-size:13.5px;font-weight:600;color:var(--navy-deep);margin-bottom:6px}
+.bk-field input,.bk-field select{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:inherit;font-size:14px;background:#fff;color:var(--ink)}
+.bk-types{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bk-type{border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13.5px}
+.bk-fee{background:var(--gold-soft);border:1px solid #E9DDBE;border-radius:8px;padding:10px 12px;font-size:13px;color:#7A5F26;margin-bottom:16px}
+.bk-submit{width:100%;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:13px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.bk-submit:hover{background:var(--navy-deep)}
+.bk-submit:disabled{opacity:.6;cursor:wait}
+.bk-msg{font-size:13.5px;margin-top:10px;display:none;color:#B3261E}
+.bk-success{display:none;text-align:center;padding:6px 0}
+.bk-success .big{font-size:40px;margin-bottom:6px}
+.bk-success p{color:var(--ink-soft);font-size:14px;margin-top:8px}
+.bk-pay{background:var(--gold-soft);border:1px solid #E9DDBE;border-radius:10px;padding:16px;margin-top:16px;text-align:right;font-size:13.5px;color:#6B5423;line-height:2}
+.bk-pay b{color:#7A5F26}
+.bk-card-no{direction:ltr;text-align:center;background:#fff;border:1px dashed var(--gold);border-radius:8px;padding:10px;font-size:18px;font-weight:800;letter-spacing:2px;color:var(--navy-deep);margin:10px 0 6px}
+@media(max-width:560px){.book-fab{bottom:16px;right:16px;padding:12px 18px;font-size:14px}}
 </style>
 </head>
 <body>
@@ -132,8 +162,12 @@ footer{border-top:1px solid var(--border);padding:28px 0;color:var(--ink-soft);f
       <a href="#practice">حوزه‌های تخصصی</a>
       <a href="#resume">سوابق</a>
       <a href="#pubs">مقالات</a>
+      <a href="notes.html">یادداشت‌های حقوقی</a>
     </nav>
-    <a class="nav-cta" href="#contact">درخواست مشاوره</a>
+    <div class="nav-side">
+      <a class="lang-switch" href="en/" title="English">EN</a>
+      <button class="nav-cta" onclick="bkOpen()">رزرو وقت مشاوره</button>
+    </div>
   </div>
 </header>
 
@@ -141,11 +175,11 @@ footer{border-top:1px solid var(--border);padding:28px 0;color:var(--ink-soft);f
   <div class="hero">
     <div class="container hero-inner">
       <div>
-        <span class="kicker">کارآموز وکالت کانون وکلای خراسان</span>
-        <h1>وکالت و مشاوره تخصصی در حقوق مالکیت فکری و فناوری</h1>
-        <p class="sub">محمدمهدی کاتب دامغانی هستم؛ دانشجوی دکتری حقوق خصوصی دانشگاه فردوسی مشهد و پژوهشگر حقوق مالکیت فکری. در کنار دعاوی و امور حقوقی عمومی، تمرکز من بر ثبت اختراع، علائم تجاری و قراردادهای حوزه فناوری است.</p>
+        <span class="kicker" id="heroKicker">کارآموز وکالت کانون وکلای خراسان</span>
+        <h1 id="heroTitle">وکالت و مشاوره تخصصی در حقوق مالکیت فکری و فناوری</h1>
+        <p class="sub" id="heroSub">محمدمهدی کاتب دامغانی هستم؛ دانشجوی دکتری حقوق خصوصی دانشگاه فردوسی مشهد و پژوهشگر حقوق مالکیت فکری. در کنار دعاوی و امور حقوقی عمومی، تمرکز من بر ثبت اختراع، علائم تجاری و قراردادهای حوزه فناوری است.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#contact">تماس و درخواست مشاوره</a>
+          <button class="btn btn-primary" onclick="bkOpen()">رزرو وقت مشاوره</button>
           <a class="btn btn-ghost" href="#resume">مشاهده سوابق</a>
         </div>
       </div>
@@ -163,8 +197,8 @@ footer{border-top:1px solid var(--border);padding:28px 0;color:var(--ink-soft);f
       </div>
       <div class="about-grid">
         <div class="about-text">
-          <p>تحصیلات حقوقی خود را در دانشگاه فردوسی مشهد آغاز کردم و سپس در مقطع کارشناسی ارشد، در رشته حقوق مالکیت فکری دانشگاه شهید بهشتی تهران دانش‌آموخته شدم. اکنون در مقطع دکتری حقوق خصوصی دانشگاه فردوسی مشهد تحصیل می‌کنم و به‌عنوان کارآموز وکالت در کانون وکلای خراسان فعالیت دارم.</p>
-          <p>در دوره همکاری با بنیاد ملی نخبگان، پژوهشی درباره حمایت حقوقی از علامت تجاری گواهی «طیب» انجام دادم و به‌عنوان مشاور مالکیت فکری با مؤسسه کیفیت رضوی همکاری داشتم. این تجربه‌ها در کنار پژوهش‌های دانشگاهی، نگاه من را به مسائل حقوقی کسب‌وکارها و فناوری‌های نو شکل داده است.</p>
+          <p id="aboutP1">تحصیلات حقوقی خود را در دانشگاه فردوسی مشهد آغاز کردم و سپس در مقطع کارشناسی ارشد، در رشته حقوق مالکیت فکری دانشگاه شهید بهشتی تهران دانش‌آموخته شدم. اکنون در مقطع دکتری حقوق خصوصی دانشگاه فردوسی مشهد تحصیل می‌کنم و به‌عنوان کارآموز وکالت در کانون وکلای خراسان فعالیت دارم.</p>
+          <p id="aboutP2">در دوره همکاری با بنیاد ملی نخبگان، پژوهشی درباره حمایت حقوقی از علامت تجاری گواهی «طیب» انجام دادم و به‌عنوان مشاور مالکیت فکری با مؤسسه کیفیت رضوی همکاری داشتم. این تجربه‌ها در کنار پژوهش‌های دانشگاهی، نگاه من را به مسائل حقوقی کسب‌وکارها و فناوری‌های نو شکل داده است.</p>
         </div>
         <div class="about-facts">
           <div class="fact"><div class="icon">🎓</div><div><b>دانشجوی دکتری حقوق خصوصی</b><span>دانشگاه فردوسی مشهد</span></div></div>
@@ -200,7 +234,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;color:var(--ink-soft);f
       <div class="two-col">
         <div>
           <div class="col-title">💼 سوابق حرفه‌ای</div>
-          <div class="timeline">
+          <div class="timeline" id="expTimeline">
             <div class="t-item">
               <div class="when">۱۴۰۳ — اکنون</div>
               <h3>کارآموز وکالت</h3>
@@ -217,7 +251,7 @@ footer{border-top:1px solid var(--border);padding:28px 0;color:var(--ink-soft);f
         </div>
         <div>
           <div class="col-title">🎓 تحصیلات</div>
-          <div class="timeline">
+          <div class="timeline" id="eduTimeline">
             <div class="t-item">
               <div class="when">۱۴۰۴ — اکنون</div>
               <h3>دکتری حقوق خصوصی</h3>
@@ -281,8 +315,8 @@ footer{border-top:1px solid var(--border);padding:28px 0;color:var(--ink-soft);f
           <p>برای مشاوره حقوقی، طرح پرونده یا همکاری پژوهشی می‌توانید از راه‌های زیر با من در ارتباط باشید. در اولین فرصت پاسخگوی شما خواهم بود.</p>
         </div>
         <div class="contact-items">
-          <a class="c-item" href="tel:+989379077686"><div class="icon">📞</div><div><b>تلفن همراه</b><span>0937 907 7686</span></div></a>
-          <a class="c-item" href="mailto:mahdikateb@gmail.com"><div class="icon">✉️</div><div><b>ایمیل</b><span>mahdikateb@gmail.com</span></div></a>
+          <a class="c-item" id="contactPhoneLink" href="tel:+989379077686"><div class="icon">📞</div><div><b>تلفن همراه</b><span id="contactPhoneText">0937 907 7686</span></div></a>
+          <a class="c-item" id="contactEmailLink" href="mailto:mahdikateb@gmail.com"><div class="icon">✉️</div><div><b>ایمیل</b><span id="contactEmailText">mahdikateb@gmail.com</span></div></a>
           <a class="c-item" href="https://www.linkedin.com/in/mohammad-mahdi-kateb-damghani-9a411b63/" target="_blank" rel="noopener"><div class="icon">💼</div><div><b>لینکدین</b><span>Mohammad Mahdi Kateb Damghani</span></div></a>
         </div>
       </div>
@@ -293,9 +327,118 @@ footer{border-top:1px solid var(--border);padding:28px 0;color:var(--ink-soft);f
 <footer>
   <div class="container footer-inner">
     <div>© ۱۴۰۵ محمدمهدی کاتب دامغانی — کلیه حقوق محفوظ است.</div>
-    <div>mahdikateb.com</div>
+    <div>mahdikateb.ir</div>
   </div>
 </footer>
+
+<button class="book-fab" onclick="bkOpen()">📅 رزرو وقت مشاوره</button>
+
+<div class="bk-overlay" id="bkOverlay">
+  <div class="bk-modal">
+    <button class="bk-close" onclick="bkClose()" aria-label="بستن">✕</button>
+    <div id="bkFormWrap">
+      <h3>رزرو وقت مشاوره</h3>
+      <div class="bk-sub">نوع مشاوره و وقت موردنظر را انتخاب کنید. حق‌المشاوره هر ۳۰ دقیقه ۵۰۰٬۰۰۰ تومان است.</div>
+      <form id="bkForm">
+        <div class="bk-field">
+          <label>نوع مشاوره</label>
+          <div class="bk-types">
+            <label class="bk-type"><input type="radio" name="bkType" value="مشاوره تلفنی" checked> 📞 تلفنی</label>
+            <label class="bk-type"><input type="radio" name="bkType" value="مشاوره آنلاین (چت در سایت)"> 💬 چت آنلاین</label>
+          </div>
+        </div>
+        <div class="bk-field">
+          <label>انتخاب وقت مشاوره</label>
+          <select id="bkSlot" required><option value="">در حال بارگذاری وقت‌ها...</option></select>
+        </div>
+        <div class="bk-field"><label>نام و نام خانوادگی</label><input id="bkName" type="text" required placeholder="مثال: علی رضایی"></div>
+        <div class="bk-field"><label>شماره تلفن همراه</label><input id="bkPhone" type="tel" required placeholder="مثال: 09121234567" style="direction:ltr;text-align:right"></div>
+        <div class="bk-fee">💰 پس از ثبت درخواست، اطلاعات پرداخت حق‌المشاوره نمایش داده می‌شود.</div>
+        <button class="bk-submit" id="bkSubmit" type="submit">ثبت درخواست مشاوره</button>
+        <div class="bk-msg" id="bkErr"></div>
+      </form>
+    </div>
+    <div class="bk-success" id="bkSuccess">
+      <div class="big">✅</div>
+      <h3>درخواست شما ثبت شد</h3>
+      <p>درخواست مشاوره شما ارسال شد. <span id="bkChatNote" style="display:none">در زمان انتخاب‌شده وارد همین سایت شوید و روی آیکون گفتگو در پایین صفحه کلیک کنید.</span></p>
+      <div class="bk-pay">
+        <b>💳 پرداخت حق‌المشاوره</b>
+        <div>مبلغ حق‌المشاوره (هر ۳۰ دقیقه ۵۰۰٬۰۰۰ تومان) را به کارت زیر واریز کنید:</div>
+        <div class="bk-card-no">6104&nbsp;3389&nbsp;9143&nbsp;7837</div>
+        <div style="text-align:center">به نام <b>محمدمهدی کاتب</b></div>
+        <div style="margin-top:8px">سپس تصویر رسید پرداخت را در پیام‌رسان <b>«بله»</b> به شماره <b style="direction:ltr;display:inline-block">09379077686</b> ارسال کنید تا وقت شما قطعی شود.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var SLOTS_URL="slots.json";
+var bkLoaded=false;
+function bkOpen(){document.getElementById('bkOverlay').classList.add('open');if(!bkLoaded){bkLoadSlots()}}
+function bkClose(){document.getElementById('bkOverlay').classList.remove('open')}
+function bkLoadSlots(){
+  var sel=document.getElementById('bkSlot');
+  fetch(SLOTS_URL+'?v='+Date.now()).then(function(r){return r.json()}).then(function(j){
+    bkLoaded=true;sel.innerHTML='';
+    var slots=(j&&j.slots)||[];
+    if(!slots.length){sel.innerHTML='<option value="">فعلاً وقت آزادی ثبت نشده است</option>';return}
+    sel.innerHTML='<option value="">— یک وقت را انتخاب کنید —</option>';
+    slots.forEach(function(s){var o=document.createElement('option');o.value=s.label;o.textContent=s.label;sel.appendChild(o)});
+  }).catch(function(){sel.innerHTML='<option value="">خطا در بارگذاری وقت‌ها — بعداً تلاش کنید</option>'});
+}
+document.getElementById('bkForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var name=document.getElementById('bkName').value.trim();
+  var phone=document.getElementById('bkPhone').value.trim();
+  var slot=document.getElementById('bkSlot').value;
+  var type=document.querySelector('input[name="bkType"]:checked').value;
+  var err=document.getElementById('bkErr');
+  if(!slot){err.textContent='لطفاً یک وقت مشاوره انتخاب کنید.';err.style.display='block';return}
+  err.style.display='none';
+  var btn=document.getElementById('bkSubmit');btn.disabled=true;btn.textContent='در حال ارسال...';
+  fetch('https://formsubmit.co/ajax/mahdikateb@gmail.com',{
+    method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({_subject:'📅 درخواست مشاوره جدید از سایت',"نام":name,"شماره همراه":phone,"نوع مشاوره":type,"وقت انتخابی":slot})
+  }).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(){
+    document.getElementById('bkFormWrap').style.display='none';
+    document.getElementById('bkSuccess').style.display='block';
+    if(type.indexOf('چت')>-1){document.getElementById('bkChatNote').style.display='inline'}
+  }).catch(function(){btn.disabled=false;btn.textContent='ثبت درخواست مشاوره';err.textContent='ارسال ناموفق بود. لطفاً دوباره تلاش کنید یا مستقیم تماس بگیرید.';err.style.display='block'});
+});
+document.getElementById('bkOverlay').addEventListener('click',function(e){if(e.target===this)bkClose()});
+
+/* بارگذاری متن‌های قابل ویرایش از content.json */
+function cSet(id,v){var el=document.getElementById(id);if(el&&v)el.textContent=v}
+function cTimeline(id,items){
+  var el=document.getElementById(id);if(!el||!items||!items.length)return;
+  el.innerHTML='';
+  items.forEach(function(it){
+    var d=document.createElement('div');d.className='t-item';
+    var w=document.createElement('div');w.className='when';w.textContent=it.when||'';d.appendChild(w);
+    var h=document.createElement('h3');h.textContent=it.title||'';d.appendChild(h);
+    var wh=document.createElement('div');wh.className='where';wh.textContent=it.where||'';d.appendChild(wh);
+    if(it.desc){var p=document.createElement('p');p.textContent=it.desc;d.appendChild(p)}
+    el.appendChild(d);
+  });
+}
+fetch('content.json?v='+Date.now()).then(function(r){return r.json()}).then(function(c){
+  if(!c)return;
+  if(c.hero){cSet('heroKicker',c.hero.kicker);cSet('heroTitle',c.hero.title);cSet('heroSub',c.hero.sub)}
+  if(c.about){cSet('aboutP1',c.about.p1);cSet('aboutP2',c.about.p2)}
+  if(c.experience)cTimeline('expTimeline',c.experience);
+  if(c.education)cTimeline('eduTimeline',c.education);
+  if(c.contact){
+    if(c.contact.phone){cSet('contactPhoneText',c.contact.phone);if(c.contact.phoneLink)document.getElementById('contactPhoneLink').href='tel:'+c.contact.phoneLink}
+    if(c.contact.email){cSet('contactEmailText',c.contact.email);document.getElementById('contactEmailLink').href='mailto:'+c.contact.email}
+  }
+}).catch(function(){});
+</script>
+
+<script type="text/javascript">
+  !function(){var i="Rtij2E",d=document,g=d.createElement("script"),s="https://www.goftino.com/widget/"+i,l=localStorage.getItem("goftino_"+i);g.type="text/javascript",g.async=!0,g.src=l?s+"?o="+l:s;d.getElementsByTagName("head")[0].appendChild(g);}();
+</script>
 
 </body>
 </html>

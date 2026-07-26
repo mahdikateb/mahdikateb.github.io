@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>یادداشت حقوقی | محمدمهدی کاتب دامغانی</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<style>
+:root{--ink:#22303E;--ink-soft:#5C6B7A;--soft:#F7F8FA;--border:#E4E7EB;--navy:#1F3A5F;--navy-deep:#16283F;--gold:#B08D42;--gold-soft:#F6F0E3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;color:var(--ink);background:#fff;font-size:16px;line-height:2}
+a{color:inherit;text-decoration:none}
+.container{max-width:760px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-weight:700;font-size:16px;color:var(--navy)}
+.brand span{color:var(--gold)}
+.back{border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13.5px;font-weight:600;color:var(--navy)}
+.back:hover{border-color:var(--navy)}
+main{padding:52px 0 80px}
+.date{font-size:13.5px;color:var(--gold);font-weight:700;margin-bottom:8px}
+h1{font-size:28px;color:var(--navy-deep);font-weight:800;line-height:1.6;margin-bottom:22px}
+.body p{color:#3d4b59;margin-bottom:18px;font-size:16px}
+.divider{width:90px;height:4px;background:var(--gold);border-radius:2px;margin:0 0 26px}
+.cta{margin-top:40px;background:var(--gold-soft);border:1px solid #E9DDBE;border-radius:12px;padding:20px 24px;font-size:14.5px;color:#6B5423}
+.cta a{font-weight:700;color:var(--navy);border-bottom:1px solid var(--gold)}
+.notfound{text-align:center;color:var(--ink-soft);padding:64px 0}
+footer{border-top:1px solid var(--border);padding:26px 0;color:var(--ink-soft);font-size:14px}
+.footer-inner{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="brand">محمدمهدی کاتب دامغانی<span> | یادداشت‌های حقوقی</span></div>
+    <a class="back" href="notes.html">← همه یادداشت‌ها</a>
+  </div>
+</header>
+<main>
+  <div class="container" id="art"><div class="notfound">در حال بارگذاری...</div></div>
+</main>
+<footer>
+  <div class="container footer-inner">
+    <div>© ۱۴۰۵ محمدمهدی کاتب دامغانی — کلیه حقوق محفوظ است.</div>
+    <div>mahdikateb.ir</div>
+  </div>
+</footer>
+<script>
+var id=new URLSearchParams(location.search).get('id');
+fetch('posts.json?v='+Date.now()).then(function(r){return r.json()}).then(function(j){
+  var posts=(j&&j.posts)||[];
+  var p=null;
+  for(var i=0;i<posts.length;i++){if(posts[i].id===id){p=posts[i];break}}
+  var art=document.getElementById('art');
+  if(!p){art.innerHTML='<div class="notfound">یادداشت موردنظر پیدا نشد. <a href="notes.html" style="color:#1F3A5F;font-weight:700">بازگشت به فهرست</a></div>';return}
+  document.title=p.title+' | محمدمهدی کاتب دامغانی';
+  art.innerHTML='';
+  var d=document.createElement('div');d.className='date';d.textContent=p.date||'';art.appendChild(d);
+  var h=document.createElement('h1');h.textContent=p.title||'';art.appendChild(h);
+  var dv=document.createElement('div');dv.className='divider';art.appendChild(dv);
+  var body=document.createElement('div');body.className='body';
+  (p.body||'').split(/\n+/).forEach(function(par){if(!par.trim())return;var el=document.createElement('p');el.textContent=par;body.appendChild(el)});
+  art.appendChild(body);
+  var cta=document.createElement('div');cta.className='cta';
+  cta.innerHTML='💬 برای بررسی موضوع حقوقی خود می‌توانید از طریق صفحه اصلی سایت <a href="index.html">وقت مشاوره رزرو کنید</a>.';
+  art.appendChild(cta);
+}).catch(function(){document.getElementById('art').innerHTML='<div class="notfound">خطا در بارگذاری یادداشت.</div>'});
+</script>
+<script type="text/javascript">
+  !function(){var i="Rtij2E",d=document,g=d.createElement("script"),s="https://www.goftino.com/widget/"+i,l=localStorage.getItem("goftino_"+i);g.type="text/javascript",g.async=!0,g.src=l?s+"?o="+l:s;d.getElementsByTagName("head")[0].appendChild(g);}();
+</script>
+</body>
+</html>
